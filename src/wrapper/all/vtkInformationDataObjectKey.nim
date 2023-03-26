@@ -23,11 +23,17 @@
 import
   vtkCommonCoreModule, vtkInformationKey, vtkCommonInformationKeyManager
 
+import
+  vtkType, vtkObjectBase, vtkIndent#, vtkInformation
+
+type
+  ostream* = object # FIXME
+
 discard "forward decl of vtkDataObject"
 type
   vtkInformationDataObjectKey* {.importcpp: "vtkInformationDataObjectKey",
                                 header: "vtkInformationDataObjectKey.h", bycopy.} = object of vtkInformationKey
-    vtkInformationDataObjectKey* {.importc: "vtkInformationDataObjectKey".}: VTK_NEWINSTANCE
+    #vtkInformationDataObjectKey* {.importc: "vtkInformationDataObjectKey".}: VTK_NEWINSTANCE
 
   vtkInformationDataObjectKeySuperclass* = vtkInformationKey
 
@@ -56,12 +62,3 @@ proc destroyvtkInformationDataObjectKey*(this: var vtkInformationDataObjectKey) 
 ##  information object.
 ##  void Set ( vtkInformation * info , vtkDataObject * ) ;
 ## Error: identifier expected, but got: *!!!
-
-proc Get*(this: var vtkInformationDataObjectKey; info: ptr vtkInformation): ptr vtkDataObject {.
-    importcpp: "Get", header: "vtkInformationDataObjectKey.h".}
-proc ShallowCopy*(this: var vtkInformationDataObjectKey; `from`: ptr vtkInformation;
-                 to: ptr vtkInformation) {.importcpp: "ShallowCopy",
-                                        header: "vtkInformationDataObjectKey.h".}
-proc Report*(this: var vtkInformationDataObjectKey; info: ptr vtkInformation;
-            collector: ptr vtkGarbageCollector) {.importcpp: "Report",
-    header: "vtkInformationDataObjectKey.h".}

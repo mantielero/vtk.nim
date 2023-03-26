@@ -25,6 +25,9 @@
 import
   vtkCommonCoreModule, vtkSystemIncludes, vtkDebugLeaksManager
 
+import
+  vtkInformationKey
+
 discard "forward decl of vtkInformationKey"
 type
   vtkCommonInformationKeyManager* {.importcpp: "vtkCommonInformationKeyManager",

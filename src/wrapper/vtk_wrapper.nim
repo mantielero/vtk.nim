@@ -7,5 +7,5 @@ export vtkCylinderSource
 
 
 #------------
-import zrecursive
+import all/zrecursive
 export zrecursive

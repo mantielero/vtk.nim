@@ -22,9 +22,18 @@
 ##  before and destroyed after all other singletons in VTK.
 ##
 
-## !!!Ignored construct:  # vtkDebugLeaksManager_h [NewLine] # vtkDebugLeaksManager_h [NewLine] # vtkCommonCoreModule.h  For export macro # vtkSystemIncludes.h [NewLine] class VTKCOMMONCORE_EXPORT vtkDebugLeaksManager { public : vtkDebugLeaksManager ( ) ; ~ vtkDebugLeaksManager ( ) ; private : vtkDebugLeaksManager ( const vtkDebugLeaksManager & ) = delete ; vtkDebugLeaksManager & operator = ( const vtkDebugLeaksManager & ) = delete ; } ;
-## Error: token expected: ; but got: [identifier]!!!
+import
+  vtkCommonCoreModule, vtkSystemIncludes
 
+type
+  vtkDebugLeaksManager* {.importcpp: "vtkDebugLeaksManager",
+                         header: "vtkDebugLeaksManager.h", bycopy.} = object
+
+
+proc constructvtkDebugLeaksManager*(): vtkDebugLeaksManager {.constructor,
+    importcpp: "vtkDebugLeaksManager(@)", header: "vtkDebugLeaksManager.h".}
+proc destroyvtkDebugLeaksManager*(this: var vtkDebugLeaksManager) {.
+    importcpp: "#.~vtkDebugLeaksManager()", header: "vtkDebugLeaksManager.h".}
 ##  This instance will show up in any translation unit that uses
 ##  vtkDebugLeaks or that has a singleton.  It will make sure
 ##  vtkDebugLeaks is initialized before it is used and is the last

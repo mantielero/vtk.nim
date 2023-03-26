@@ -28,6 +28,9 @@
 import
   vtkCommonCoreModule, vtkObject, vtkType, vtkObjectBase, vtkIndent, vtkInformationKey
 
+import
+  vtkInformationDataObjectKey
+
 type
   ostream* = object # FIXME
 
