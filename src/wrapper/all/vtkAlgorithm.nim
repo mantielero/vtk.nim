@@ -30,7 +30,10 @@
 ##
 
 import
-  vtkCommonExecutionModelModule, vtkObject
+  vtkCommonExecutionModelModule, vtkObject, vtkType, vtkObjectBase, vtkIndent
+
+import
+  vtkExecutive
 
 discard "forward decl of vtkAbstractArray"
 discard "forward decl of vtkAlgorithmInternals"
@@ -48,7 +51,7 @@ discard "forward decl of vtkInformationVector"
 discard "forward decl of vtkProgressObserver"
 type
   vtkAlgorithm* {.importcpp: "vtkAlgorithm", header: "vtkAlgorithm.h", bycopy.} = object of vtkObject
-    vtkAlgorithm* {.importc: "vtkAlgorithm".}: VTK_NEWINSTANCE
+    #vtkAlgorithm* {.importc: "vtkAlgorithm".}: VTK_NEWINSTANCE
     AbortExecute* {.importc: "AbortExecute".}: vtkTypeBool ## *
                                                        ##  Keys used to specify input port requirements.
                                                        ##  \ingroup InformationKeys
@@ -62,6 +65,8 @@ type
     ##  Progress/Update handling
     ##  Garbage collection support.
 
+type
+    ostream* = object # FIXME
 
 proc New*(): ptr vtkAlgorithm {.importcpp: "vtkAlgorithm::New(@)",
                             header: "vtkAlgorithm.h".}
