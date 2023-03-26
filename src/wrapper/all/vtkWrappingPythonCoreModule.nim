@@ -1,0 +1,11 @@
+when defined(VTKWRAPPINGPYTHONCORE_STATIC_DEFINE):
+else:
+when not defined(VTKWRAPPINGPYTHONCORE_DEPRECATED):
+  discard
+when not defined(VTKWRAPPINGPYTHONCORE_DEPRECATED_EXPORT):
+  const
+    VTKWRAPPINGPYTHONCORE_DEPRECATED_EXPORT* = __attribute__((__deprecated__))
+when not defined(VTKWRAPPINGPYTHONCORE_DEPRECATED_NO_EXPORT):
+  const
+    VTKWRAPPINGPYTHONCORE_DEPRECATED_NO_EXPORT* = __attribute__((__deprecated__))
+when 0:

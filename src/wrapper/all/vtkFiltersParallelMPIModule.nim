@@ -1,0 +1,11 @@
+when defined(VTKFILTERSPARALLELMPI_STATIC_DEFINE):
+else:
+when not defined(VTKFILTERSPARALLELMPI_DEPRECATED):
+  discard
+when not defined(VTKFILTERSPARALLELMPI_DEPRECATED_EXPORT):
+  const
+    VTKFILTERSPARALLELMPI_DEPRECATED_EXPORT* = __attribute__((__deprecated__))
+when not defined(VTKFILTERSPARALLELMPI_DEPRECATED_NO_EXPORT):
+  const
+    VTKFILTERSPARALLELMPI_DEPRECATED_NO_EXPORT* = __attribute__((__deprecated__))
+when 0:

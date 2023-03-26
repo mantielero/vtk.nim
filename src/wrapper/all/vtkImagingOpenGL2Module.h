@@ -1,0 +1,42 @@
+
+#ifndef VTKIMAGINGOPENGL2_EXPORT_H
+#define VTKIMAGINGOPENGL2_EXPORT_H
+
+#ifdef VTKIMAGINGOPENGL2_STATIC_DEFINE
+#  define VTKIMAGINGOPENGL2_EXPORT
+#  define VTKIMAGINGOPENGL2_NO_EXPORT
+#else
+#  ifndef VTKIMAGINGOPENGL2_EXPORT
+#    ifdef ImagingOpenGL2_EXPORTS
+        /* We are building this library */
+#      define VTKIMAGINGOPENGL2_EXPORT __attribute__((visibility("default")))
+#    else
+        /* We are using this library */
+#      define VTKIMAGINGOPENGL2_EXPORT __attribute__((visibility("default")))
+#    endif
+#  endif
+
+#  ifndef VTKIMAGINGOPENGL2_NO_EXPORT
+#    define VTKIMAGINGOPENGL2_NO_EXPORT __attribute__((visibility("hidden")))
+#  endif
+#endif
+
+#ifndef VTKIMAGINGOPENGL2_DEPRECATED
+#  define VTKIMAGINGOPENGL2_DEPRECATED __attribute__ ((__deprecated__))
+#endif
+
+#ifndef VTKIMAGINGOPENGL2_DEPRECATED_EXPORT
+#  define VTKIMAGINGOPENGL2_DEPRECATED_EXPORT VTKIMAGINGOPENGL2_EXPORT VTKIMAGINGOPENGL2_DEPRECATED
+#endif
+
+#ifndef VTKIMAGINGOPENGL2_DEPRECATED_NO_EXPORT
+#  define VTKIMAGINGOPENGL2_DEPRECATED_NO_EXPORT VTKIMAGINGOPENGL2_NO_EXPORT VTKIMAGINGOPENGL2_DEPRECATED
+#endif
+
+#if 0 /* DEFINE_NO_DEPRECATED */
+#  ifndef VTKIMAGINGOPENGL2_NO_DEPRECATED
+#    define VTKIMAGINGOPENGL2_NO_DEPRECATED
+#  endif
+#endif
+
+#endif /* VTKIMAGINGOPENGL2_EXPORT_H */

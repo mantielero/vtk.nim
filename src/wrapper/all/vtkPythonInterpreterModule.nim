@@ -1,0 +1,11 @@
+when defined(VTKPYTHONINTERPRETER_STATIC_DEFINE):
+else:
+when not defined(VTKPYTHONINTERPRETER_DEPRECATED):
+  discard
+when not defined(VTKPYTHONINTERPRETER_DEPRECATED_EXPORT):
+  const
+    VTKPYTHONINTERPRETER_DEPRECATED_EXPORT* = __attribute__((__deprecated__))
+when not defined(VTKPYTHONINTERPRETER_DEPRECATED_NO_EXPORT):
+  const
+    VTKPYTHONINTERPRETER_DEPRECATED_NO_EXPORT* = __attribute__((__deprecated__))
+when 0:

@@ -1,0 +1,3 @@
+/home/jose/src/nimlang/vtk.nim/examples/c++/build/CMakeFiles/Tutorial_Step1.dir
+/home/jose/src/nimlang/vtk.nim/examples/c++/build/CMakeFiles/edit_cache.dir
+/home/jose/src/nimlang/vtk.nim/examples/c++/build/CMakeFiles/rebuild_cache.dir

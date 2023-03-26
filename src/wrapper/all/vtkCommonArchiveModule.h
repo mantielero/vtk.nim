@@ -1,0 +1,42 @@
+
+#ifndef VTKCOMMONARCHIVE_EXPORT_H
+#define VTKCOMMONARCHIVE_EXPORT_H
+
+#ifdef VTKCOMMONARCHIVE_STATIC_DEFINE
+#  define VTKCOMMONARCHIVE_EXPORT
+#  define VTKCOMMONARCHIVE_NO_EXPORT
+#else
+#  ifndef VTKCOMMONARCHIVE_EXPORT
+#    ifdef CommonArchive_EXPORTS
+        /* We are building this library */
+#      define VTKCOMMONARCHIVE_EXPORT __attribute__((visibility("default")))
+#    else
+        /* We are using this library */
+#      define VTKCOMMONARCHIVE_EXPORT __attribute__((visibility("default")))
+#    endif
+#  endif
+
+#  ifndef VTKCOMMONARCHIVE_NO_EXPORT
+#    define VTKCOMMONARCHIVE_NO_EXPORT __attribute__((visibility("hidden")))
+#  endif
+#endif
+
+#ifndef VTKCOMMONARCHIVE_DEPRECATED
+#  define VTKCOMMONARCHIVE_DEPRECATED __attribute__ ((__deprecated__))
+#endif
+
+#ifndef VTKCOMMONARCHIVE_DEPRECATED_EXPORT
+#  define VTKCOMMONARCHIVE_DEPRECATED_EXPORT VTKCOMMONARCHIVE_EXPORT VTKCOMMONARCHIVE_DEPRECATED
+#endif
+
+#ifndef VTKCOMMONARCHIVE_DEPRECATED_NO_EXPORT
+#  define VTKCOMMONARCHIVE_DEPRECATED_NO_EXPORT VTKCOMMONARCHIVE_NO_EXPORT VTKCOMMONARCHIVE_DEPRECATED
+#endif
+
+#if 0 /* DEFINE_NO_DEPRECATED */
+#  ifndef VTKCOMMONARCHIVE_NO_DEPRECATED
+#    define VTKCOMMONARCHIVE_NO_DEPRECATED
+#  endif
+#endif
+
+#endif /* VTKCOMMONARCHIVE_EXPORT_H */

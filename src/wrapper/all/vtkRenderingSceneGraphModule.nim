@@ -1,0 +1,11 @@
+when defined(VTKRENDERINGSCENEGRAPH_STATIC_DEFINE):
+else:
+when not defined(VTKRENDERINGSCENEGRAPH_DEPRECATED):
+  discard
+when not defined(VTKRENDERINGSCENEGRAPH_DEPRECATED_EXPORT):
+  const
+    VTKRENDERINGSCENEGRAPH_DEPRECATED_EXPORT* = __attribute__((__deprecated__))
+when not defined(VTKRENDERINGSCENEGRAPH_DEPRECATED_NO_EXPORT):
+  const
+    VTKRENDERINGSCENEGRAPH_DEPRECATED_NO_EXPORT* = __attribute__((__deprecated__))
+when 0:
