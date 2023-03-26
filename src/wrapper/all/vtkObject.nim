@@ -38,7 +38,7 @@
 ##  vtkCommand vtkTimeStamp
 ##
 import
-    vtkType, vtkIndent
+    vtkType, vtkIndent, vtkCommand
 import
   vtkCommonCoreModule, vtkObjectBase, vtkTimeStamp, vtkWeakPointerBase # vtkSetGet, 
 
