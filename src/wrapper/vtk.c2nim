@@ -1065,4 +1065,17 @@ public:
   vtkArrayIteratorTemplateMacroCase(VTK_STRING, vtkStdString, call);                               \
   vtkTemplateMacroCase(VTK_BIT, vtkBitArrayIterator, call)
 
+
+
+#def vtkAllEventsMacro()                                                                        \
+
+
+
+#def vtkEventDeclarationMacro(_enum_name)                                                       \
+  enum _enum_name                                                                                  \
+  {                                                                                                \
+    NoEvent = 0,                                                                                   \
+    vtkAllEventsMacro() UserEvent = 1000                                                           \
+  }
+
 #endif
