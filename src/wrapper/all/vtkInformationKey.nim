@@ -27,73 +27,49 @@
 ##
 
 ## !!!Ignored construct:  # vtkInformationKey_h [NewLine] # vtkInformationKey_h [NewLine] # vtkCommonCoreModule.h  For export macro # vtkObject.h  Need vtkTypeMacro # vtkObjectBase.h [NewLine] class vtkInformation ;
-## Error: token expected: ; but got: [identifier]!!!
+## Error: identifier expected, but got: ##!!!
+import
+  vtkObjectBase, vtkType, vtkIndent
 
-## !!!Ignored construct:  class VTKCOMMONCORE_EXPORT vtkInformationKey : public vtkObjectBase { public : protected : const char * GetClassNameInternal ( ) const override { return thisClass ; } public : typedef vtkObjectBase Superclass ; static vtkTypeBool IsTypeOf ( const char * type ) { if ( ! strcmp ( thisClass , type ) ) { return 1 ; } return vtkObjectBase :: IsTypeOf ( type ) ; } vtkTypeBool IsA ( const char * type ) override { return this -> vtkInformationKey :: IsTypeOf ( type ) ; } static vtkInformationKey * SafeDownCast ( vtkObjectBase * o ) { if ( o && o -> IsA ( thisClass ) ) { return static_cast < vtkInformationKey * > ( o ) ; } return nullptr ; } VTK_NEWINSTANCE vtkInformationKey * NewInstance ( ) const { return vtkInformationKey :: SafeDownCast ( this -> NewInstanceInternal ( ) ) ; } static vtkIdType GetNumberOfGenerationsFromBaseType ( const char * type ) { if ( ! strcmp ( thisClass , type ) ) { return 0 ; } return 1 + vtkObjectBase :: GetNumberOfGenerationsFromBaseType ( type ) ; } vtkIdType GetNumberOfGenerationsFromBase ( const char * type ) override { return this -> vtkInformationKey :: GetNumberOfGenerationsFromBaseType ( type ) ; } public : protected : virtual vtkObjectBase * NewInstanceInternal ( ) const { return vtkInformationKey :: New ( ) ; } public : ; void PrintSelf ( ostream & os , vtkIndent indent ) override ; *
-##  Prevent normal vtkObject reference counting behavior.
-##  void Register ( vtkObjectBase * ) override ; *
-##  Prevent normal vtkObject reference counting behavior.
-##  void UnRegister ( vtkObjectBase * ) override ; *
-##  Get the name of the key.  This is not the type of the key, but
-##  the name of the key instance.
-##  const char * GetName ( ) ; *
-##  Get the location of the key.  This is the name of the class in
-##  which the key is defined.
-##  const char * GetLocation ( ) ; /@{ *
-##  Key instances are static data that need to be created and
-##  destroyed.  The constructor and destructor must be public.  The
-##  name of the static instance and the class in which it is defined
-##  should be passed to the constructor.  They must be string
-##  literals because the strings are not copied.
-##  vtkInformationKey ( const char * name , const char * location ) ; ~ vtkInformationKey ( ) override ; /@} *
-##  Copy the entry associated with this key from one information
-##  object to another.  If there is no entry in the first information
-##  object for this key, the value is removed from the second.
-##  virtual void ShallowCopy ( vtkInformation * from , vtkInformation * to ) = 0 ; *
-##  Duplicate (new instance created) the entry associated with this key from
-##  one information object to another (new instances of any contained
-##  vtkInformation and vtkInformationVector objects are created).
-##  Default implementation simply calls ShallowCopy().
-##  virtual void DeepCopy ( vtkInformation * from , vtkInformation * to ) { this -> ShallowCopy ( from , to ) ; } *
-##  Check whether this key appears in the given information object.
-##  virtual int Has ( vtkInformation * info ) ; *
-##  Remove this key from the given information object.
-##  virtual void Remove ( vtkInformation * info ) ; *
-##  Report a reference this key has in the given information object.
-##  virtual void Report ( vtkInformation * info , vtkGarbageCollector * collector ) ; /@{ *
-##  Print the key's value in an information object to a stream.
-##  void Print ( vtkInformation * info ) ; virtual void Print ( ostream & os , vtkInformation * info ) ; /@} *
-##  This function is only relevant when the pertaining key
-##  is used in a VTK pipeline. Specific keys that handle
-##  pipeline data requests (for example, UPDATE_PIECE_NUMBER)
-##  can overwrite this method to notify the pipeline that a
-##  a filter should be (re-)executed because what is in
-##  the current output is different that what is being requested
-##  by the key. For example, DATA_PIECE_NUMBER != UPDATE_PIECE_NUMBER.
-##  virtual bool NeedToExecute ( vtkInformation * vtkNotUsed ( pipelineInfo ) , vtkInformation * vtkNotUsed ( dobjInfo ) ) { return false ; } *
-##  This function is only relevant when the pertaining key
-##  is used in a VTK pipeline. Specific keys that handle
-##  pipeline data requests (for example, UPDATE_PIECE_NUMBER)
-##  can overwrite this method to store in the data information
-##  meta-data about the request that led to the current filter
-##  execution. This meta-data can later be used to compare what
-##  is being requested to decide whether the filter needs to
-##  re-execute. For example, a filter may store the current
-##  UPDATE_PIECE_NUMBER in the data object's information as
-##  the DATA_PIECE_NUMBER. DATA_PIECE_NUMBER can later be compared
-##  to a new UPDATA_PIECE_NUMBER to decide whether a filter should
-##  re-execute.
-##  virtual void StoreMetaData ( vtkInformation * vtkNotUsed ( request ) , vtkInformation * vtkNotUsed ( pipelineInfo ) , vtkInformation * vtkNotUsed ( dobjInfo ) ) { } *
-##  This function is only relevant when the pertaining key
-##  is used in a VTK pipeline. By overwriting this method, a
-##  key can decide if/how to copy itself downstream or upstream
-##  during a particular pipeline pass. For example, meta-data keys
-##  can copy themselves during REQUEST_INFORMATION whereas request
-##  keys can copy themselves during REQUEST_UPDATE_EXTENT.
-##  virtual void CopyDefaultInformation ( vtkInformation * vtkNotUsed ( request ) , vtkInformation * vtkNotUsed ( fromInfo ) , vtkInformation * vtkNotUsed ( toInfo ) ) { } protected : char * Name ; char * Location ; # vtkInformationKeySetStringMacro ( name ) virtual void Set ## name ( const char * _arg ) { if ( this -> name == nullptr && _arg == nullptr ) { return ; } if ( this -> name && _arg && ( ! strcmp ( this -> name , _arg ) ) ) { return ; } delete [ ] this -> name ; if ( _arg ) { size_t n = strlen ( _arg ) + 1 ; char * cp1 = new char [ n ] ; const char * cp2 = ( _arg ) ; this -> name = cp1 ; do { * cp1 ++ = * cp2 ++ ; } while ( -- n ) ; } else { this -> name = nullptr ; } } [NewLine] vtkInformationKeySetStringMacro ( Name ) ; vtkInformationKeySetStringMacro ( Location ) ;  Set/Get the value associated with this key instance in the given
-##  information object. void SetAsObjectBase ( vtkInformation * info , vtkObjectBase * value ) ; const vtkObjectBase * GetAsObjectBase ( vtkInformation * info ) const ; vtkObjectBase * GetAsObjectBase ( vtkInformation * info ) ;  Report the object associated with this key instance in the given
-##  information object to the collector. void ReportAsObjectBase ( vtkInformation * info , vtkGarbageCollector * collector ) ;  Helper for debug leaks support. void ConstructClass ( const char * ) ; private : vtkInformationKey ( const vtkInformationKey & ) = delete ; void operator = ( const vtkInformationKey & ) = delete ; } ;
-## Error: token expected: ; but got: [identifier]!!!
+type
+  ostream* = object # FIXME
+
+
+type
+  vtkInformationKey* {.importcpp: "vtkInformationKey",
+                      header: "vtkInformationKey.h", bycopy.} = object of vtkObjectBase
+    #vtkInformationKey* {.importc: "vtkInformationKey".}: VTK_NEWINSTANCE
+    ##  Set/Get the value associated with this key instance in the given
+    ##  information object.
+
+  vtkInformationKeySuperclass* = vtkObjectBase
+
+proc IsTypeOf*(`type`: cstring): vtkTypeBool {.
+    importcpp: "vtkInformationKey::IsTypeOf(@)", header: "vtkInformationKey.h".}
+proc IsA*(this: var vtkInformationKey; `type`: cstring): vtkTypeBool {.
+    importcpp: "IsA", header: "vtkInformationKey.h".}
+proc SafeDownCast*(o: ptr vtkObjectBase): ptr vtkInformationKey {.
+    importcpp: "vtkInformationKey::SafeDownCast(@)", header: "vtkInformationKey.h".}
+## !!!Ignored construct:  * NewInstance ( ) const { return vtkInformationKey :: SafeDownCast ( this -> NewInstanceInternal ( ) ) ; } static vtkIdType GetNumberOfGenerationsFromBaseType ( const char * type ) { if ( ! strcmp ( thisClass , type ) ) { return 0 ; } return 1 + vtkObjectBase :: GetNumberOfGenerationsFromBaseType ( type ) ; } vtkIdType GetNumberOfGenerationsFromBase ( const char * type ) override { return this -> vtkInformationKey :: GetNumberOfGenerationsFromBaseType ( type ) ; } public : protected : virtual vtkObjectBase * NewInstanceInternal ( ) const { return vtkInformationKey :: New ( ) ; } public : ;
+## Error: identifier expected, but got: *!!!
+
+proc PrintSelf*(this: var vtkInformationKey; os: var ostream; indent: vtkIndent) {.
+    importcpp: "PrintSelf", header: "vtkInformationKey.h".}
+proc Register*(this: var vtkInformationKey; a2: ptr vtkObjectBase) {.
+    importcpp: "Register", header: "vtkInformationKey.h".}
+proc UnRegister*(this: var vtkInformationKey; a2: ptr vtkObjectBase) {.
+    importcpp: "UnRegister", header: "vtkInformationKey.h".}
+proc GetName*(this: var vtkInformationKey): cstring {.importcpp: "GetName",
+    header: "vtkInformationKey.h".}
+proc GetLocation*(this: var vtkInformationKey): cstring {.importcpp: "GetLocation",
+    header: "vtkInformationKey.h".}
+proc constructvtkInformationKey*(name: cstring; location: cstring): vtkInformationKey {.
+    constructor, importcpp: "vtkInformationKey(@)", header: "vtkInformationKey.h".}
+proc destroyvtkInformationKey*(this: var vtkInformationKey) {.
+    importcpp: "#.~vtkInformationKey()", header: "vtkInformationKey.h".}
+
+template vtkInformationKeySetStringMacro*(name: untyped): untyped =
+  virtual
 
 ##  Macros to define an information key instance in a C++ source file.
 ##  The corresponding method declaration must appear in the class

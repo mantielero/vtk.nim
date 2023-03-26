@@ -27,6 +27,9 @@
 import
   vtkCommonExecutionModelModule, vtkObject, vtkType, vtkObjectBase, vtkIndent
 
+import
+  vtkInformation
+
 type
   ostream* = object # FIXME
 

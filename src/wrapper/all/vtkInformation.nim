@@ -26,7 +26,10 @@
 ##
 
 import
-  vtkCommonCoreModule, vtkObject
+  vtkCommonCoreModule, vtkObject, vtkType, vtkObjectBase, vtkIndent, vtkInformationKey
+
+type
+  ostream* = object # FIXME
 
 discard "forward decl of vtkDataObject"
 discard "forward decl of vtkExecutive"
@@ -57,8 +60,8 @@ discard "forward decl of vtkInformationVector"
 discard "forward decl of vtkVariant"
 type
   vtkInformation* {.importcpp: "vtkInformation", header: "vtkInformation.h", bycopy.} = object of vtkObject
-    vtkInformation* {.importc: "vtkInformation".}: VTK_NEWINSTANCE
-    VTK_WRAP_EXTERN* {.importc: "VTK_WRAP_EXTERN".}: vtkDataObject
+    #vtkInformation* {.importc: "vtkInformation".}: VTK_NEWINSTANCE
+    #VTK_WRAP_EXTERN* {.importc: "VTK_WRAP_EXTERN".}: vtkDataObject
     ##  Garbage collection support.
 
 
