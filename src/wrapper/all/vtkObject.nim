@@ -37,15 +37,19 @@
 ##  @sa
 ##  vtkCommand vtkTimeStamp
 ##
-
+import
+    vtkType, vtkIndent
 import
   vtkCommonCoreModule, vtkObjectBase, vtkTimeStamp, vtkWeakPointerBase # vtkSetGet, 
+
+type
+  ostream* = object # FIXME
 
 discard "forward decl of vtkSubjectHelper"
 discard "forward decl of vtkCommand"
 type
   vtkObject* {.importcpp: "vtkObject", header: "vtkObject.h", bycopy.} = object of vtkObjectBase
-    vtkObject* {.importc: "vtkObject".}: VTK_NEWINSTANCE
+    #vtkObject* {.importc: "vtkObject".}: VTK_NEWINSTANCE
     ##  Enable debug messages
     ##  Keep track of modification time
     ##  List of observers on this object

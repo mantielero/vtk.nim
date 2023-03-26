@@ -24,11 +24,11 @@
 ##
 
 import
-  vtkCommonCoreModule, vtkSystemIncludes
+  vtkCommonCoreModule, vtkSystemIncludes, vtkType
 
 type
   vtkTimeStamp* {.importcpp: "vtkTimeStamp", header: "vtkTimeStamp.h", bycopy.} = object
-  vtkMTimeType* = object # FIXME
+  #vtkMTimeType* = object # FIXME
 
 converter tovtkMTimeType*(this: vtkTimeStamp): vtkMTimeType {.noSideEffect,
     importcpp: "vtkTimeStamp::operator vtkMTimeType", header: "vtkTimeStamp.h".}
