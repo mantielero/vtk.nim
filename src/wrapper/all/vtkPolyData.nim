@@ -471,9 +471,9 @@ proc ResizeCellList*(ptId: vtkIdType; size: cint) {.
     header: "vtkPolyData.h".}
 ## ------------------------------------------------------------------------------
 
-proc GetCellArrayInternal*(tag: TaggedCellId): ptr vtkCellArray {.
-    importcpp: "VTKCOMMONDATAMODEL_EXPORT::GetCellArrayInternal(@)",
-    header: "vtkPolyData.h".}
+# proc GetCellArrayInternal*(tag: TaggedCellId): ptr vtkCellArray {.
+#     importcpp: "VTKCOMMONDATAMODEL_EXPORT::GetCellArrayInternal(@)",
+#     header: "vtkPolyData.h".}
 ## ------------------------------------------------------------------------------
 
 proc ReplaceCellPoint*(cellId: vtkIdType; oldPtId: vtkIdType; newPtId: vtkIdType) {.
