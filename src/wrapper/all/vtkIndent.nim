@@ -20,18 +20,25 @@
 ##  process. This way nested objects can correctly indent themselves.
 ##
 
-## !!!Ignored construct:  # vtkIndent_h [NewLine] # vtkIndent_h [NewLine] # vtkCommonCoreModule.h  For export macro # vtkSystemIncludes.h [NewLine] class vtkIndent ;
-## Error: token expected: ; but got: &!!!
+import
+  vtkCommonCoreModule, vtkSystemIncludes
 
-## !!!Ignored construct:  VTKCOMMONCORE_EXPORT ostream & operator << ( ostream & os , const vtkIndent & o ) ;
-## Error: token expected: ; but got: &!!!
+type
+  ostream* = object   # FIXME
 
-## !!!Ignored construct:  class VTKCOMMONCORE_EXPORT vtkIndent { public : void Delete ( ) { delete this ; } explicit vtkIndent ( int ind = 0 ) { this -> Indent = ind ; } static vtkIndent * New ( ) ; *
-##  Determine the next indentation level. Keep indenting by two until the
-##  max of forty.
-##  vtkIndent GetNextIndent ( ) ; *
-##  Print out the indentation. Basically output a bunch of spaces.
-##  friend VTKCOMMONCORE_EXPORT ostream & operator << ( ostream & os , const vtkIndent & o ) ; protected : int Indent ; } ;
-## Error: token expected: ; but got: [identifier]!!!
+type
+  vtkIndent* {.importcpp: "vtkIndent", header: "vtkIndent.h", bycopy.} = object
 
+
+discard "forward decl of vtkIndent"
+proc `<<`*(os: var ostream; o: vtkIndent): var ostream {.importcpp: "(# << #)",
+    header: "vtkIndent.h".}
+
+
+proc Delete*(this: var vtkIndent) {.importcpp: "Delete", header: "vtkIndent.h".}
+proc constructvtkIndent*(ind: cint = 0): vtkIndent {.constructor,
+    importcpp: "vtkIndent(@)", header: "vtkIndent.h".}
+proc New*(): ptr vtkIndent {.importcpp: "vtkIndent::New(@)", header: "vtkIndent.h".}
+proc GetNextIndent*(this: var vtkIndent): vtkIndent {.importcpp: "GetNextIndent",
+    header: "vtkIndent.h".}
 ##  VTK-HeaderTest-Exclude: vtkIndent.h

@@ -38,51 +38,97 @@
 ##  vtkCommand vtkTimeStamp
 ##
 
-## !!!Ignored construct:  # vtkObject_h [NewLine] # vtkObject_h [NewLine] # vtkCommonCoreModule.h  For export macro # vtkObjectBase.h [NewLine] # vtkSetGet.h [NewLine] # vtkTimeStamp.h [NewLine] # vtkWeakPointerBase.h  needed for vtkWeakPointer [NewLine] class vtkSubjectHelper ;
-## Error: token expected: ; but got: [identifier]!!!
+import
+  vtkCommonCoreModule, vtkObjectBase, vtkTimeStamp, vtkWeakPointerBase # vtkSetGet, 
 
+discard "forward decl of vtkSubjectHelper"
 discard "forward decl of vtkCommand"
-## !!!Ignored construct:  class VTKCOMMONCORE_EXPORT vtkObject : public vtkObjectBase { public : protected : const char * GetClassNameInternal ( ) const override { return thisClass ; } public : typedef vtkObjectBase Superclass ; static vtkTypeBool IsTypeOf ( const char * type ) { if ( ! strcmp ( thisClass , type ) ) { return 1 ; } return vtkObjectBase :: IsTypeOf ( type ) ; } vtkTypeBool IsA ( const char * type ) override { return this -> vtkObject :: IsTypeOf ( type ) ; } static vtkObject * SafeDownCast ( vtkObjectBase * o ) { if ( o && o -> IsA ( thisClass ) ) { return static_cast < vtkObject * > ( o ) ; } return nullptr ; } VTK_NEWINSTANCE vtkObject * NewInstance ( ) const { return vtkObject :: SafeDownCast ( this -> NewInstanceInternal ( ) ) ; } static vtkIdType GetNumberOfGenerationsFromBaseType ( const char * type ) { if ( ! strcmp ( thisClass , type ) ) { return 0 ; } return 1 + vtkObjectBase :: GetNumberOfGenerationsFromBaseType ( type ) ; } vtkIdType GetNumberOfGenerationsFromBase ( const char * type ) override { return this -> vtkObject :: GetNumberOfGenerationsFromBaseType ( type ) ; } public : protected : virtual vtkObjectBase * NewInstanceInternal ( ) const { return vtkObject :: New ( ) ; } public : ; *
-##  Create an object with Debug turned off, modified time initialized
-##  to zero, and reference counting on.
-##  static vtkObject * New ( ) ; # _WIN32 [NewLine]  avoid dll boundary problems void * operator new ( size_t tSize ) ; void operator delete ( void * p ) ; # [NewLine] *
-##  Turn debugging output on.
-##  virtual void DebugOn ( ) ; *
-##  Turn debugging output off.
-##  virtual void DebugOff ( ) ; *
-##  Get the value of the debug flag.
-##  bool GetDebug ( ) ; *
-##  Set the value of the debug flag. A true value turns debugging on.
-##  void SetDebug ( bool debugFlag ) ; *
-##  This method is called when vtkErrorMacro executes. It allows
-##  the debugger to break on error.
-##  static void BreakOnError ( ) ; *
-##  Update the modification time for this object. Many filters rely on
-##  the modification time to determine if they need to recompute their
-##  data. The modification time is a unique monotonically increasing
-##  unsigned long integer.
-##  virtual void Modified ( ) ; *
-##  Return this object's modified time.
-##  virtual vtkMTimeType GetMTime ( ) ; *
-##  Methods invoked by print to print information about the object
-##  including superclasses. Typically not called by the user (use
-##  Print() instead) but used in the hierarchical print process to
-##  combine the output of several classes.
-##  void PrintSelf ( ostream & os , vtkIndent indent ) override ; /@{ *
-##  This is a global flag that controls whether any debug, warning
-##  or error messages are displayed.
-##  static void SetGlobalWarningDisplay ( int val ) ; static void GlobalWarningDisplayOn ( ) { vtkObject :: SetGlobalWarningDisplay ( 1 ) ; } static void GlobalWarningDisplayOff ( ) { vtkObject :: SetGlobalWarningDisplay ( 0 ) ; } static int GetGlobalWarningDisplay ( ) ; /@} /@{ *
-##  Allow people to add/remove/invoke observers (callbacks) to any VTK
-##  object.  This is an implementation of the subject/observer design
-##  pattern. An observer is added by specifying an event to respond to
-##  and a vtkCommand to execute. It returns an unsigned long tag which
-##  can be used later to remove the event or retrieve the command.
-##  When events are invoked, the observers are called in the order they
-##  were added. If a priority value is specified, then the higher
-##  priority commands are called first. A command may set an abort
-##  flag to stop processing of the event. (See vtkCommand.h for more
-##  information.)
-##  unsigned long AddObserver ( unsigned long event , vtkCommand * , float priority = 0.0f ) ; unsigned long AddObserver ( const char * event , vtkCommand * , float priority = 0.0f ) ; vtkCommand * GetCommand ( unsigned long tag ) ; void RemoveObserver ( vtkCommand * ) ; void RemoveObservers ( unsigned long event , vtkCommand * ) ; void RemoveObservers ( const char * event , vtkCommand * ) ; vtkTypeBool HasObserver ( unsigned long event , vtkCommand * ) ; vtkTypeBool HasObserver ( const char * event , vtkCommand * ) ; /@} void RemoveObserver ( unsigned long tag ) ; void RemoveObservers ( unsigned long event ) ; void RemoveObservers ( const char * event ) ; void RemoveAllObservers ( ) ;  remove every last one of them vtkTypeBool HasObserver ( unsigned long event ) ; vtkTypeBool HasObserver ( const char * event ) ; /@{ *
+type
+  vtkObject* {.importcpp: "vtkObject", header: "vtkObject.h", bycopy.} = object of vtkObjectBase
+    vtkObject* {.importc: "vtkObject".}: VTK_NEWINSTANCE
+    ##  Enable debug messages
+    ##  Keep track of modification time
+    ##  List of observers on this object
+    ##  Name of this object for reporting
+    ## /@{
+    ## *
+    ##  These methods allow a command to exclusively grab all events. (This
+    ##  method is typically used by widgets to grab events once an event
+    ##  sequence begins.)  These methods are provided in support of the
+    ##  public methods found in the class vtkInteractorObserver. Note that
+    ##  these methods are designed to support vtkInteractorObservers since
+    ##  they use two separate vtkCommands to watch for mouse and keypress events.
+    ##
+
+  vtkObjectSuperclass* = vtkObjectBase
+
+proc IsTypeOf*(`type`: cstring): vtkTypeBool {.importcpp: "vtkObject::IsTypeOf(@)",
+    header: "vtkObject.h".}
+proc IsA*(this: var vtkObject; `type`: cstring): vtkTypeBool {.importcpp: "IsA",
+    header: "vtkObject.h".}
+proc SafeDownCast*(o: ptr vtkObjectBase): ptr vtkObject {.
+    importcpp: "vtkObject::SafeDownCast(@)", header: "vtkObject.h".}
+## !!!Ignored construct:  * NewInstance ( ) const { return vtkObject :: SafeDownCast ( this -> NewInstanceInternal ( ) ) ; } static vtkIdType GetNumberOfGenerationsFromBaseType ( const char * type ) { if ( ! strcmp ( thisClass , type ) ) { return 0 ; } return 1 + vtkObjectBase :: GetNumberOfGenerationsFromBaseType ( type ) ; } vtkIdType GetNumberOfGenerationsFromBase ( const char * type ) override { return this -> vtkObject :: GetNumberOfGenerationsFromBaseType ( type ) ; } public : protected : virtual vtkObjectBase * NewInstanceInternal ( ) const { return vtkObject :: New ( ) ; } public : ;
+## Error: identifier expected, but got: *!!!
+
+proc New*(): ptr vtkObject {.importcpp: "vtkObject::New(@)", header: "vtkObject.h".}
+## !!!Ignored construct:  # _WIN32 [NewLine]  avoid dll boundary problems void * operator new ( size_t tSize ) ;
+## Error: identifier expected, but got:  avoid dll boundary problems!!!
+
+proc `delete`*(this: var vtkObject; p: pointer) {.
+    importcpp: "vtkObject::operator delete", header: "vtkObject.h".}
+proc DebugOn*(this: var vtkObject) {.importcpp: "DebugOn", header: "vtkObject.h".}
+proc DebugOff*(this: var vtkObject) {.importcpp: "DebugOff", header: "vtkObject.h".}
+proc GetDebug*(this: var vtkObject): bool {.importcpp: "GetDebug",
+                                       header: "vtkObject.h".}
+proc SetDebug*(this: var vtkObject; debugFlag: bool) {.importcpp: "SetDebug",
+    header: "vtkObject.h".}
+proc BreakOnError*() {.importcpp: "vtkObject::BreakOnError(@)",
+                     header: "vtkObject.h".}
+proc Modified*(this: var vtkObject) {.importcpp: "Modified", header: "vtkObject.h".}
+proc GetMTime*(this: var vtkObject): vtkMTimeType {.importcpp: "GetMTime",
+    header: "vtkObject.h".}
+proc PrintSelf*(this: var vtkObject; os: var ostream; indent: vtkIndent) {.
+    importcpp: "PrintSelf", header: "vtkObject.h".}
+proc SetGlobalWarningDisplay*(val: cint) {.importcpp: "vtkObject::SetGlobalWarningDisplay(@)",
+                                        header: "vtkObject.h".}
+proc GlobalWarningDisplayOn*() {.importcpp: "vtkObject::GlobalWarningDisplayOn(@)",
+                               header: "vtkObject.h".}
+proc GlobalWarningDisplayOff*() {.importcpp: "vtkObject::GlobalWarningDisplayOff(@)",
+                                header: "vtkObject.h".}
+proc GetGlobalWarningDisplay*(): cint {.importcpp: "vtkObject::GetGlobalWarningDisplay(@)",
+                                     header: "vtkObject.h".}
+proc AddObserver*(this: var vtkObject; event: culong; a3: ptr vtkCommand;
+                 priority: cfloat = 0.0f): culong {.importcpp: "AddObserver",
+    header: "vtkObject.h".}
+proc AddObserver*(this: var vtkObject; event: cstring; a3: ptr vtkCommand;
+                 priority: cfloat = 0.0f): culong {.importcpp: "AddObserver",
+    header: "vtkObject.h".}
+proc GetCommand*(this: var vtkObject; tag: culong): ptr vtkCommand {.
+    importcpp: "GetCommand", header: "vtkObject.h".}
+proc RemoveObserver*(this: var vtkObject; a2: ptr vtkCommand) {.
+    importcpp: "RemoveObserver", header: "vtkObject.h".}
+proc RemoveObservers*(this: var vtkObject; event: culong; a3: ptr vtkCommand) {.
+    importcpp: "RemoveObservers", header: "vtkObject.h".}
+proc RemoveObservers*(this: var vtkObject; event: cstring; a3: ptr vtkCommand) {.
+    importcpp: "RemoveObservers", header: "vtkObject.h".}
+proc HasObserver*(this: var vtkObject; event: culong; a3: ptr vtkCommand): vtkTypeBool {.
+    importcpp: "HasObserver", header: "vtkObject.h".}
+proc HasObserver*(this: var vtkObject; event: cstring; a3: ptr vtkCommand): vtkTypeBool {.
+    importcpp: "HasObserver", header: "vtkObject.h".}
+proc RemoveObserver*(this: var vtkObject; tag: culong) {.importcpp: "RemoveObserver",
+    header: "vtkObject.h".}
+proc RemoveObservers*(this: var vtkObject; event: culong) {.
+    importcpp: "RemoveObservers", header: "vtkObject.h".}
+proc RemoveObservers*(this: var vtkObject; event: cstring) {.
+    importcpp: "RemoveObservers", header: "vtkObject.h".}
+proc RemoveAllObservers*(this: var vtkObject) {.importcpp: "RemoveAllObservers",
+    header: "vtkObject.h".}
+proc HasObserver*(this: var vtkObject; event: culong): vtkTypeBool {.
+    importcpp: "HasObserver", header: "vtkObject.h".}
+proc HasObserver*(this: var vtkObject; event: cstring): vtkTypeBool {.
+    importcpp: "HasObserver", header: "vtkObject.h".}
+## !!!Ignored construct:  /@{ *
 ##  Overloads to AddObserver that allow developers to add class member
 ##  functions as callbacks for events.  The callback function can
 ##  be one of these two types:
@@ -106,7 +152,7 @@ discard "forward decl of vtkCommand"
 ##  with the observer still in place. For non-vtkObjectBase observers,
 ##  the observer should never be deleted before it is removed.
 ##  Return value is a tag that can be used to remove the observer.
-##  template < class U , class T > unsigned long AddObserver ( unsigned long event , U observer , void ( T :: * callback ) ( ) , float priority = 0.0f ) { vtkClassMemberCallback < T > * callable = new vtkClassMemberCallback < T > ( observer , callback ) ;  callable is deleted when the observer is cleaned up (look at
+##  template < class U , class T > [end of template] unsigned long AddObserver ( unsigned long event , U observer , void ( T :: * callback ) ( ) , float priority = 0.0f ) { vtkClassMemberCallback < T > * callable = new vtkClassMemberCallback < T > ( observer , callback ) ;  callable is deleted when the observer is cleaned up (look at
 ##  vtkObjectCommandInternal) return this -> AddTemplatedObserver ( event , callable , priority ) ; } template < class U , class T > unsigned long AddObserver ( unsigned long event , U observer , void ( T :: * callback ) ( vtkObject * , unsigned long , void * ) , float priority = 0.0f ) { vtkClassMemberCallback < T > * callable = new vtkClassMemberCallback < T > ( observer , callback ) ;  callable is deleted when the observer is cleaned up (look at
 ##  vtkObjectCommandInternal) return this -> AddTemplatedObserver ( event , callable , priority ) ; } /@} /@{ *
 ##  Allow user to set the AbortFlagOn() with the return value of the callback
@@ -116,41 +162,19 @@ discard "forward decl of vtkCommand"
 ##  This method invokes an event and return whether the event was
 ##  aborted or not. If the event was aborted, the return value is 1,
 ##  otherwise it is 0.
-##  int InvokeEvent ( unsigned long event , void * callData ) ; int InvokeEvent ( const char * event , void * callData ) ; /@} int InvokeEvent ( unsigned long event ) { return this -> InvokeEvent ( event , nullptr ) ; } int InvokeEvent ( const char * event ) { return this -> InvokeEvent ( event , nullptr ) ; } /@{ *
-##  Set/get the name of this object for reporting purposes. The name appears in
-##  warning and debug messages and in the Print output. Setting the object name
-##  does not change the MTime and does not invoke a ModifiedEvent. Derived
-##  classes implementing copying methods are expected not to copy the ObjectName.
-##  virtual void SetObjectName ( const std :: string & objectName ) ; virtual std :: string GetObjectName ( ) const ; /@} *
-##  The object description printed in messages and PrintSelf
-##  output. To be used only for reporting purposes.
-##  std :: string GetObjectDescription ( ) const override ; protected : vtkObject ( ) ; ~ vtkObject ( ) override ;  See vtkObjectBase.h. void RegisterInternal ( vtkObjectBase * , vtkTypeBool check ) override ; void UnRegisterInternal ( vtkObjectBase * , vtkTypeBool check ) override ; bool Debug ;  Enable debug messages vtkTimeStamp MTime ;  Keep track of modification time vtkSubjectHelper * SubjectHelper ;  List of observers on this object std :: string ObjectName ;  Name of this object for reporting /@{ *
-##  These methods allow a command to exclusively grab all events. (This
-##  method is typically used by widgets to grab events once an event
-##  sequence begins.)  These methods are provided in support of the
-##  public methods found in the class vtkInteractorObserver. Note that
-##  these methods are designed to support vtkInteractorObservers since
-##  they use two separate vtkCommands to watch for mouse and keypress events.
-##  void InternalGrabFocus ( vtkCommand * mouseEvents , vtkCommand * keypressEvents = nullptr ) ; void InternalReleaseFocus ( ) ; /@} private : vtkObject ( const vtkObject & ) = delete ; void operator = ( const vtkObject & ) = delete ; *
-##  Following classes (vtkClassMemberCallbackBase,
-##  vtkClassMemberCallback, and vtkClassMemberHandlerPointer)
-##  along with vtkObjectCommandInternal are for supporting
-##  templated AddObserver() overloads that allow developers
-##  to add event callbacks that are class member functions.
-##  class vtkClassMemberCallbackBase { public : /@{ *
-##  Called when the event is invoked
-##  virtual bool operator ( ) ( vtkObject * , unsigned long , void * ) = 0 ; virtual ~ vtkClassMemberCallbackBase ( ) = default ; /@} } ; /@{ *
-##  This is a weak pointer for vtkObjectBase and a regular
-##  void pointer for everything else
-##  template < class T > class vtkClassMemberHandlerPointer { public : void operator = ( vtkObjectBase * o ) {  The cast is needed in case "o" has multi-inheritance,
-##  to offset the pointer to get the vtkObjectBase. if ( ( this -> VoidPointer = dynamic_cast < T * > ( o ) ) == nullptr ) {  fallback to just using its vtkObjectBase as-is. this -> VoidPointer = o ; } this -> WeakPointer = o ; this -> UseWeakPointer = true ; } void operator = ( void * o ) { this -> VoidPointer = o ; this -> WeakPointer = nullptr ; this -> UseWeakPointer = false ; } T * GetPointer ( ) { if ( this -> UseWeakPointer && ! this -> WeakPointer . GetPointer ( ) ) { return nullptr ; } return static_cast < T * > ( this -> VoidPointer ) ; } private : vtkWeakPointerBase WeakPointer ; void * VoidPointer ; bool UseWeakPointer ; } ; /@} /@{ *
-##  Templated member callback.
-##  template < class T > class vtkClassMemberCallback : public vtkClassMemberCallbackBase { vtkClassMemberHandlerPointer < T > Handler ; void ( T :: * Method1 ) ( ) ; void ( T :: * Method2 ) ( vtkObject * , unsigned long , void * ) ; bool ( T :: * Method3 ) ( vtkObject * , unsigned long , void * ) ; public : vtkClassMemberCallback ( T * handler , void ( T :: * method ) ( ) ) { this -> Handler = handler ; this -> Method1 = method ; this -> Method2 = nullptr ; this -> Method3 = nullptr ; } vtkClassMemberCallback ( T * handler , void ( T :: * method ) ( vtkObject * , unsigned long , void * ) ) { this -> Handler = handler ; this -> Method1 = nullptr ; this -> Method2 = method ; this -> Method3 = nullptr ; } vtkClassMemberCallback ( T * handler , bool ( T :: * method ) ( vtkObject * , unsigned long , void * ) ) { this -> Handler = handler ; this -> Method1 = nullptr ; this -> Method2 = nullptr ; this -> Method3 = method ; } ~ vtkClassMemberCallback ( ) override = default ;  Called when the event is invoked bool operator ( ) ( vtkObject * caller , unsigned long event , void * calldata ) override { T * handler = this -> Handler . GetPointer ( ) ; if ( handler ) { if ( this -> Method1 ) { ( handler ->* this -> Method1 ) ( ) ; } else if ( this -> Method2 ) { ( handler ->* this -> Method2 ) ( caller , event , calldata ) ; } else if ( this -> Method3 ) { return ( handler ->* this -> Method3 ) ( caller , event , calldata ) ; } } return false ; } } ; /@} /@{ *
-##  Hook into the destruction process to send out `DeleteEvent` and remove
-##  observers.
-##  void ObjectFinalize ( ) final ; /@} /@{ *
-##  Called by templated variants of AddObserver.
-##  unsigned long AddTemplatedObserver ( unsigned long event , vtkClassMemberCallbackBase * callable , float priority ) ;  Friend to access AddTemplatedObserver(). friend class vtkObjectCommandInternal ; /@} } ;
-## Error: token expected: ; but got: [identifier]!!!
+##  int InvokeEvent ( unsigned long event , void * callData ) ;
+## Error: token expected: ) but got: ::!!!
 
+proc InvokeEvent*(this: var vtkObject; event: cstring; callData: pointer): cint {.
+    importcpp: "InvokeEvent", header: "vtkObject.h".}
+proc InvokeEvent*(this: var vtkObject; event: culong): cint {.importcpp: "InvokeEvent",
+    header: "vtkObject.h".}
+proc InvokeEvent*(this: var vtkObject; event: cstring): cint {.
+    importcpp: "InvokeEvent", header: "vtkObject.h".}
+proc SetObjectName*(this: var vtkObject; objectName: string) {.
+    importcpp: "SetObjectName", header: "vtkObject.h".}
+proc GetObjectName*(this: vtkObject): string {.noSideEffect,
+    importcpp: "GetObjectName", header: "vtkObject.h".}
+proc GetObjectDescription*(this: vtkObject): string {.noSideEffect,
+    importcpp: "GetObjectDescription", header: "vtkObject.h".}
 ##  VTK-HeaderTest-Exclude: vtkObject.h

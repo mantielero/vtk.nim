@@ -1,3 +1,4 @@
+import vtkObjectBase
 ## =========================================================================
 ##
 ##   Program:   Visualization Toolkit

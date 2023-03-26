@@ -28,7 +28,10 @@ import
 
 type
   vtkTimeStamp* {.importcpp: "vtkTimeStamp", header: "vtkTimeStamp.h", bycopy.} = object
+  vtkMTimeType* = object # FIXME
 
+converter tovtkMTimeType*(this: vtkTimeStamp): vtkMTimeType {.noSideEffect,
+    importcpp: "vtkTimeStamp::operator vtkMTimeType", header: "vtkTimeStamp.h".}
 
 proc constructvtkTimeStamp*(): vtkTimeStamp {.constructor,
     importcpp: "vtkTimeStamp(@)", header: "vtkTimeStamp.h".}
@@ -41,6 +44,5 @@ proc GetMTime*(this: vtkTimeStamp): vtkMTimeType {.noSideEffect,
     importcpp: "GetMTime", header: "vtkTimeStamp.h".}
 proc `<`*(this: var vtkTimeStamp; ts: var vtkTimeStamp): bool {.importcpp: "(# < #)",
     header: "vtkTimeStamp.h".}
-converter `vtkMTimeType`*(this: vtkTimeStamp): vtkMTimeType {.noSideEffect,
-    importcpp: "vtkTimeStamp::operator vtkMTimeType", header: "vtkTimeStamp.h".}
+
 ##  VTK-HeaderTest-Exclude: vtkTimeStamp.h

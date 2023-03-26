@@ -51,11 +51,17 @@ discard "forward decl of vtkGarbageCollector"
 discard "forward decl of vtkGarbageCollectorToObjectBaseFriendship"
 discard "forward decl of vtkWeakPointerBase"
 discard "forward decl of vtkWeakPointerBaseToObjectBaseFriendship"
+
+type
+    ostream* = object # FIXME
+
+
 type
   vtkMallocingFunction* = proc (a1: csize_t): pointer
   vtkReallocingFunction* = proc (a1: pointer; a2: csize_t): pointer
   vtkFreeingFunction* = proc (a1: pointer)
-  vtkObjectBase* {.importcpp: "vtkObjectBase", header: "vtkObjectBase.h", bycopy.} = object ## *
+  vtkObjectBase* {.importcpp: "vtkObjectBase", header: "vtkObjectBase.h", 
+                   bycopy, pure, inheritable.} = object ## *
                                                                                     ##  Return the class name as a string. This method is overridden
                                                                                     ##  in all subclasses of vtkObjectBase with the vtkTypeMacro found
                                                                                     ##  in vtkSetGet.h.
