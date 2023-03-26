@@ -12,6 +12,6 @@ import wrapper/vtk_wrapper
 
 
 proc main =
-  var tmp = newCylinderSource()
+  var tmp = New()
 
 main()

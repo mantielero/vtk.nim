@@ -486,6 +486,6 @@ proc GetCellPoints*(cellId: vtkIdType; npts: var vtkIdType; pts: ptr vtkIdType):
     header: "vtkPolyData.h".}
 ## ------------------------------------------------------------------------------
 
-proc GetCellPoints*(cellId: vtkIdType; npts: var vtkIdType; pts: ptr vtkIdType;
-                   ptIds: ptr vtkIdList) {.importcpp: "VTKCOMMONDATAMODEL_EXPORT::GetCellPoints(@)",
-                                        header: "vtkPolyData.h".}
+# proc GetCellPoints*(cellId: vtkIdType; npts: var vtkIdType; pts: ptr vtkIdType;
+#                    ptIds: ptr vtkIdList) {.importcpp: "VTKCOMMONDATAMODEL_EXPORT::GetCellPoints(@)",
+#                                         header: "vtkPolyData.h".}
