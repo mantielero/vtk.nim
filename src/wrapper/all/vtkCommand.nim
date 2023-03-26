@@ -229,7 +229,7 @@
 ##
 
 import
-  vtkCommonCoreModule, vtkObject, vtkObjectBase
+  vtkCommonCoreModule, vtkObject, vtkObjectBase, vtkType#, vtkObject
 
 ##  clang-format off
 ##  Define all types of events here.
@@ -239,7 +239,7 @@ import
 
 type
   vtkCommand* {.importcpp: "vtkCommand", header: "vtkCommand.h", bycopy.} = object of vtkObjectBase
-    vtkCommand* {.importc: "vtkCommand".}: VTK_NEWINSTANCE
+    #vtkCommand* {.importc: "vtkCommand".}: VTK_NEWINSTANCE
 
   vtkCommandSuperclass* = vtkObjectBase
 
@@ -256,8 +256,7 @@ proc UnRegister*(this: var vtkCommand) {.importcpp: "UnRegister",
                                      header: "vtkCommand.h".}
 ## using statement
 
-proc Execute*(this: var vtkCommand; caller: ptr vtkObject; eventId: culong;
-             callData: pointer) {.importcpp: "Execute", header: "vtkCommand.h".}
+
 proc GetStringFromEventId*(event: culong): cstring {.
     importcpp: "vtkCommand::GetStringFromEventId(@)", header: "vtkCommand.h".}
 proc GetEventIdFromString*(event: cstring): culong {.
@@ -289,3 +288,4 @@ proc PassiveObserverOff*(this: var vtkCommand) {.importcpp: "PassiveObserverOff"
 ## Error: did not expect [NewLine]!!!
 
 ##  VTK-HeaderTest-Exclude: vtkCommand.h
+
